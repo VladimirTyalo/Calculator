@@ -64,14 +64,12 @@
     z-index: 0;
   }
   
-  .button--equal {
-    width: 164px;
-    margin-right: 0 !important;
-    font-weight: bold;
-  }
-  
-  .button--clear {
+
+  .button--clear,
+  .button--del {
     color: #a73d16;
+    padding-left: 5px;
+    padding-right: 5px;
   }
   
   .input-area {

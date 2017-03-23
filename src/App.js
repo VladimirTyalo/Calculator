@@ -4,6 +4,8 @@ import './App.css';
 import Display from './Display';
 import InputArea from './InputArea';
 
+import {buttonClicks} from './api';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -13,8 +15,10 @@ class App extends Component {
     };
   }
 
-  handleResult(value, operation) {
-    this.setState({display: value, lastOperation: operation});
+  handleResult(operation) {
+    const {display, lastOperation} = this.state;
+    const result = buttonClicks(operation, display, lastOperation);
+    this.setState({display: result.val, lastOperation: result.op});
   }
 
   render() {
@@ -23,7 +27,7 @@ class App extends Component {
         <h1 className="title">Calculator</h1>
         <div className="calculator">
           <Display val={this.state.display} operation={this.state.lastOperation}/>
-          <InputArea getResult={this.handleResult.bind(this)}/>
+          <InputArea getResult={this.handleResult.bind(this)} />
         </div>
       </div>
     );

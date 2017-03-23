@@ -43,14 +43,14 @@ export default class InputStack {
         }
         // remember last operation currPrecedence
         prevPrecedence = currPrecedence;
-        // if no operations on current stack just apply curried stack functions to remaining value;
+        // if no operations on current stack just apply curried stack functions to remaining values;
       } else if (curriedOpStack.length > 0) {
         // keep applying function from curried stack to remaining value
-        const result = curriedOpStack.pop()(val).eval();
+        const result = curriedOpStack.pop()(val);
         this.values.push(result);
       } else {
         // should be the last iteration. Three out of 4 stacks is empty
-        return val;
+        return val.eval();
       }
     }
   }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class Button extends Component {
   handleClick() {
-    this.press(this.props.val);
+    this.props.press(this.props.val);
   }
   getStyle() {
     const { val } = this.props;
@@ -13,8 +13,12 @@ class Button extends Component {
           top: "0.25em"
         };
       }
-      case 'AC': {
+      case 'AC':
+      case 'DEL': {
         return {
+          display: "inline-block",
+          verticalAlign: "middle",
+          textAlign: "center",
           fontSize: "30px",
         };
       }
@@ -28,12 +32,15 @@ class Button extends Component {
   }
 
   buttonClassName() {
-    switch(this.props.val) {
+    switch (this.props.val) {
       case '=': {
         return 'button button--equal';
       }
       case 'AC': {
         return 'button button--clear';
+      }
+      case 'DEL': {
+        return 'button button--del';
       }
       default: return 'button';
     }
