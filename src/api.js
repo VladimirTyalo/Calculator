@@ -48,12 +48,12 @@ export const buttonClicks = (button, currentValue, lastOperation) => {
       let res;
       // to deal with zero division use try catch
       try {
-        res = input.equal();
+        res = invalidate(input.equal());
       } catch (error) {
         res = 'error';
       }
       input = new inputStack();
-
+      
       return { val: res, op: undefined };
     }
     case '*': {
@@ -97,5 +97,5 @@ export const buttonClicks = (button, currentValue, lastOperation) => {
 
 function invalidate(val) {
   const res = Number(val);
-  return Number.isNaN(res) ? 'error' : res;
+  return Number.isNaN(res) || res === Infinity || res === -Infinity ? 'error' : res;
 }

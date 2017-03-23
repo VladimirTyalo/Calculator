@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background-image: linear-gradient(to 45deg, black -20%, transparent, black 120%);
+    background: linear-gradient(45deg, black -20%, transparent , black 120%) no-repeat;
     background-repeat: no-repeat;
     min-height: 100vh;
   }
@@ -64,7 +64,14 @@
     z-index: 0;
   }
   
-
+  .button--active {
+    box-shadow: inset rgba(255, 255, 255, 0.6) 0 0.3em .3em, inset rgba(0, 0, 0, 0.2) 0 -0.1em .3em, /* inner shadow */
+    rgba(0, 0, 0, 0.4) 0 .1em 1px, /* border */
+    rgba(0, 0, 0, 0.2) 0 .2em 6px;
+    transform: translateY(4px);
+    z-index: 0;
+  }
+  
   .button--clear,
   .button--del {
     color: #a73d16;
@@ -82,6 +89,7 @@
   .App {
     position: relative;
     top: 5vh;
+    text-align: center;
     max-width: 450px;
     margin: 0 auto;
     padding: 30px auto;

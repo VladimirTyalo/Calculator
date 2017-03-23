@@ -47,7 +47,9 @@ class Button extends Component {
   }
   render() {
     return (
-      <button className={this.buttonClassName()} onClick={this.handleClick.bind(this)} >
+      <button className={this.buttonClassName()}
+        onClick={this.handleClick.bind(this)}
+        id={`button-${this.props.val}`} >
         <span style={this.getStyle()} >
           {this.props.val}
         </span>

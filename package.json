@@ -3,10 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "postcss": "^5.2.16",
+    "postcss-minify-gradients": "^1.0.5",
+    "postcss-minify-params": "^1.2.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },
   "devDependencies": {
+    "postcss": "^5.2.16",
     "react-scripts": "0.9.5"
   },
   "scripts": {
