@@ -24,4 +24,7 @@
   `npm run start`
 
 ## User stories
-
+1. User can add, subtract, multiply and divide two numbers.
+2. User can clear the input field with a clear button.
+3. User can keep chaining mathematical operations together until I hit the equal button,
+ and the calculator will tell the correct output.
