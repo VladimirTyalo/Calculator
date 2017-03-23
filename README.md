@@ -1,6 +1,6 @@
 # Calculator (React, OOP for calculator logic)
 
-## <a href="" target="_blank">Live Demo Preview</a>
+## <a href="https://vladimirtyalo.github.io/Calculator/" target="_blank">Live Demo Preview</a>
 
 ## About
   Simple calculator with operation precedence:
