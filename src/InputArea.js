@@ -11,8 +11,8 @@ class InputArea extends Component {
   render() {
     return (
       <div className="input-area">
-        <Button val={8} type={"value"} press={this.handlePress.bind(this)} />
         <Button val={7} type={"value"} press={this.handlePress.bind(this)} />
+        <Button val={8} type={"value"} press={this.handlePress.bind(this)} />
         <Button val={9} type={"value"} press={this.handlePress.bind(this)} />
         <Button val={"DEL"} type={"operation"} press={this.handlePress.bind(this)} />
         <Button val={"AC"} type={"operation"} press={this.handlePress.bind(this)} />
