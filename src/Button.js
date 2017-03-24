@@ -45,6 +45,7 @@ class Button extends Component {
       default: return 'button';
     }
   }
+
   render() {
     return (
       <button className={this.buttonClassName()}

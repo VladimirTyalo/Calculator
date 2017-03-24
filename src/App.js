@@ -3,41 +3,7 @@ import React, { Component } from 'react';
 import Display from './Display';
 import InputArea from './InputArea';
 import { buttonClicks } from './api';
-
-const key = {
-  ESC: 27,
-  ENTER: 13,
-  DIV: 111,
-  MULT: 106,
-  PERIOD: 110,
-  MINUS: 109,
-  PLUS: 107,
-  DEL: 8,
-  SQRT: 86 // v letter
-};
-
-const operationMap = {
-  [key.ESC]: 'AC',
-  [key.ENTER]: '=',
-  [key.DIV]: '\u00F7',
-  [key.MULT]: '*',
-  [key.PERIOD]: '.',
-  [key.MINUS]: '-',
-  [key.PLUS]: '+',
-  [key.DEL]: 'DEL',
-  [key.SQRT]: '\u221A',
-  96: '0',
-  97: 1,
-  98: 2,
-  99: 3,
-  100: 4,
-  101: 5,
-  102: 6,
-  103: 7,
-  104: 8,
-  105: 9
-};
-
+import { operationMap } from './config';
 
 
 class App extends Component {
@@ -57,18 +23,36 @@ class App extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('keydown', ev => {
-      const key = ev.keyCode || ev.which;
-      if (operationMap[key]) {
-        const operation = operationMap[key];
-        this.handleResult(operationMap[key]);
-
-        // simulate visual button press
-        const button = document.getElementById(`button-${operation}`);
-        button.classList.add('button--active');
-        setTimeout(() => button.classList.remove('button--active'), 200);
-      }
+    const keyDownHandler = window.addEventListener('keydown', ev => {
+      const operation = makeAction('add', ev);
+      this.handleResult(operation);
     });
+    const keyUpHandler = window.addEventListener('keyup', ev => {
+      makeAction('remove', ev);
+    });
+
+    this.setState({ keyUpHandler });
+    this.setState({ keyDownHandler });
+
+    function makeAction(action, ev) {
+      const key = ev.keyCode || ev.which;
+      let operation;
+      if (operationMap[key]) {
+        operation = operationMap[key];
+        const button = document.getElementById(`button-${operation}`);
+        if (action === 'add') {
+          button.classList.add('button--active');
+        } else {
+          button.classList.remove('button--active');
+        }
+      }
+      return operation;
+    }
+  }
+  componentWillUnmount() {
+    const { keyDownHandler, keyUpHandler } = this.state;
+    if (keyDownHandler) window.removeEventListener(keyDownHandler);
+    if (keyUpHandler) window.removeEventListener(keyUpHandler);
   }
 
   render() {
