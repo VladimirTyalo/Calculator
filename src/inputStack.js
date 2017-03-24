@@ -12,6 +12,14 @@ export default class InputStack {
 
   value(val) {
     this.values.push(val);
+    this.lastInput = 'val';
+  }
+
+  // in cace you need to change last operation this method can be handy
+  pop() {
+    this.operations.pop();
+    this.values.pop();
+    this.precedStack.pop();
   }
 
   equal() {

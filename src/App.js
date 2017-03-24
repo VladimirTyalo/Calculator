@@ -12,8 +12,8 @@ class App extends Component {
     this.state = {
       display: "0",
       lastOperation: "+",
-      keyDown: false
     };
+    this.keyDown = false;
     this.handleResult = this.handleResult.bind(this);
   }
 
@@ -25,33 +25,33 @@ class App extends Component {
 
   componentDidMount() {
     const keyDownHandler = window.addEventListener('keydown', ev => {
-      if(this.state.keyDown) return;
-      const operation = makeAction('add', ev);
+      const key = ev.keyCode || ev.which;
+      const operation = operationMap[key];
+      if (!operation || this.keyDown) return;
+  
+      handleButtonAnimation('add', operation);
       this.handleResult(operation);
+      this.keyDown = true;
     });
+
     const keyUpHandler = window.addEventListener('keyup', ev => {
-      makeAction('remove', ev);
+      const key = ev.keyCode || ev.which;
+      const operation = operationMap[key];
+      if (!operation) return;
+      handleButtonAnimation('remove', operation);
+      this.keyDown = false;
     });
 
     this.setState({ keyUpHandler });
     this.setState({ keyDownHandler });
 
-    const self = this;
-    function makeAction(action, ev) {
-      const key = ev.keyCode || ev.which;
-      let operation;
-      if (operationMap[key]) {
-        operation = operationMap[key];
-        const button = document.getElementById(`button-${operation}`);
-        if (action === 'add') {
-          self.setState({keyDown: true});
-          button.classList.add('button--active');
-        } else {
-          self.setState({keyDown: false});
-          button.classList.remove('button--active');
-        }
+    function handleButtonAnimation(action, operation) {
+      const button = document.getElementById(`button-${operation}`);
+      if (action === 'add') {
+        button.classList.add('button--active');
+      } else {
+        button.classList.remove('button--active');
       }
-      return operation;
     }
   }
   componentWillUnmount() {

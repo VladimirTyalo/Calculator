@@ -2,6 +2,7 @@ import calc from './calculator';
 import inputStack from './inputStack.js';
 
 let input = new inputStack();
+let lastButton = 'value';
 
 export const buttonClicks = (button, currentValue, lastOperation) => {
 
@@ -23,6 +24,7 @@ export const buttonClicks = (button, currentValue, lastOperation) => {
       const res = currentValue === '0' || lastOperation || currentValue === 'error'
         ? `${button}`
         : `${currentValue}${button}`;
+      lastButton = 'value';
       return { val: res, op: undefined };
     }
     case '.': {
@@ -30,17 +32,21 @@ export const buttonClicks = (button, currentValue, lastOperation) => {
         || currentValue === 'error'
         ? currentValue
         : `${currentValue}.`;
-
+      lastButton = 'value';
       return { val: res, op: undefined };
     }
     case 'AC': {
+      lastButton = 'value';
       return { val: 0, op: undefined };
     }
     case 'DEL': {
+      lastButton = 'value';
       if (currentValue === 'error') return { val: 0, op: undefined };
+
       return { val: currentValue.slice(0, -1) || 0, op: lastOperation };
     }
     case '=': {
+      lastButton = 'value';
       const value = invalidate(currentValue);
       if (value === 'error') return { val: 'error', op: undefined };
       input.value(calc.val(value));
@@ -53,42 +59,59 @@ export const buttonClicks = (button, currentValue, lastOperation) => {
         res = 'error';
       }
       input = new inputStack();
-      
+
       return { val: res, op: undefined };
     }
     case '*': {
       const value = invalidate(currentValue);
       if (value === 'error') return { val: 'error', op: undefined };
+      if (lastButton === 'operation') {
+        input.pop();
+      }
       input.value(calc.val(value));
       input.operation(calc.multiply);
+      lastButton = 'operation';
       return { val: currentValue, op: "*" };
     }
     case '\u00F7': { // division
       const value = invalidate(currentValue);
       if (value === 'error') return { val: 'error', op: undefined };
+      if (lastButton === 'operation') {
+        input.pop();
+      }
       input.value(calc.val(value));
       input.operation(calc.divide);
+      lastButton = 'operation';
       return { val: currentValue, op: '\u00F7' };
     }
     case '+': {
       const value = invalidate(currentValue);
-      if (value === 'error') return { val: 'error', op: undefined };
+      if (lastButton === 'operation') {
+        input.pop();
+      }
       input.value(calc.val(value));
       input.operation(calc.add);
+      lastButton = 'operation';
       return { val: currentValue, op: '+' };
     }
     case '-': {
       const value = invalidate(currentValue);
       if (value === 'error') return { val: 'error', op: undefined };
+      if (lastButton === 'operation') {
+        input.pop();
+      }
       input.value(calc.val(value));
       input.operation(calc.subtract);
+      lastButton = 'operation';
       return { val: currentValue, op: '-' };
     }
     case '\u221A': { // square root
       const res = currentValue >= 0 ? Math.sqrt(currentValue) : "error";
+      lastButton = 'value';
       return { val: res, op: lastOperation };
     }
     case '+/-': {
+      lastButton = 'value';
       return { val: -Number(currentValue), op: lastOperation };
     }
     default: return { val: '0', op: undefined };
